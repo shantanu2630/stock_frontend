@@ -1,21 +1,25 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
 
-interface KPI {
-  label: string;
-  value: string;
-  delta?: string;
-  positive?: boolean;
-}
 
-interface HeaderProps {
-  userName: string;
-  liveStatusText: string;
-  kpis: KPI[];
-}
+// import React from "react";
 
-function Header({ userName, liveStatusText, kpis }: HeaderProps) {
+// interface KPI {
+//   label: string;
+//   value: string;
+//   delta?: string;
+//   positive?: boolean;
+// }
+
+// interface HeaderProps {
+//   userName: string;
+//   liveStatusText: string;
+//   kpis: KPI[];
+// }
+
+
+function Header() {
   const now = new Date();
+  
 
   return (
     <>
@@ -25,13 +29,11 @@ function Header({ userName, liveStatusText, kpis }: HeaderProps) {
           top: 0,
           left: "50%",
           transform: "translateX(-50%)",
-
           width: "100%",
           //maxWidth: 1400, // optional constraint
           padding: "0 10px",
           boxSizing: "border-box",
-
-          height: 120,
+          height: 90,
           borderRadius: 2,
         }}
       >
@@ -78,9 +80,7 @@ function Header({ userName, liveStatusText, kpis }: HeaderProps) {
               </Box>
             </Typography>
           </Grid>
-          <Grid size={4} >
-            {/* RIGHT PART */}
-          </Grid>
+          <Grid size={4}>{/* RIGHT PART */}</Grid>
         </Grid>
       </Box>
     </>
