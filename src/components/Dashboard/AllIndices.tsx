@@ -13,6 +13,7 @@ interface ResponseData {
   indexSymbol: string;
   last: number;
   percentChange: number;
+  variation:number;
 }
 
 const AllIndices = () => {
@@ -23,40 +24,30 @@ const AllIndices = () => {
     res.then((data: any) => setData(data));
     
   }, []);
-  console.log("data", data);
+  
   return (
     <Box
       sx={{
-        width: "100%",
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
-        gap: 2,
-        border: "2px solid white",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(15%, 100%), 1fr))",
+        gap: 1,
+        display:"grid"
       }}
     >
       {data &&
-        data.slice(0, 5).map((item, key) => (
+        data.map((item, key) => (
           <Card key={key}>
             <CardActionArea
               //   onClick={() => setSelectedCard(index)}
               //   data-active={selectedCard === index ? "" : undefined}
-              sx={{
-                height: "100%",
-                "&[data-active]": {
-                  backgroundColor: "action.selected",
-                  "&:hover": {
-                    backgroundColor: "action.selectedHover",
-                  },
-                },
-              }}
+
             >
-              <CardHeader title={item.indexSymbol} />
-              <CardContent sx={{ height: "100%" }}>
-                <Typography variant="h5" component="div">
+              <CardHeader title={item.indexSymbol}></CardHeader>
+              <CardContent >
+                <Typography m={0} p={0}>
                   {item.last}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {item.percentChange}
+                <Typography fontSize={12} color={item.percentChange.toString().startsWith('+')?'error':'success'}>
+                  {item.variation} ({item.percentChange}%)
                 </Typography>
               </CardContent>
             </CardActionArea>

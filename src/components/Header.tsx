@@ -48,7 +48,7 @@ function Header() {
                 left: 30,
                 fontSize: 10,
                 top: 10,
-                fontFamily: "monospace",
+              
               }}
             >
               {now.toLocaleDateString(undefined, {
@@ -68,7 +68,6 @@ function Header() {
                 position: "fixed",
                 top: 30,
                 left: 30,
-                fontFamily: "monospace",
                 color: "white",
                 fontWeight: "bold",
               }}

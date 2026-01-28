@@ -9,17 +9,16 @@ const Dashboard = () => {
     <Grid
       container
       width={"100vw"}
-      minHeight={700}
       sx={{ position: "fixed", top: 90,}}
     >
-      <Grid size={8} sx={{ border: "2px solid white" }}>
+      <Grid size={8}>
         <AllIndices/>
       </Grid>
       <Grid
         size={4}
-        // sx={{ border: "2px solid white"}}
+       
       >
-        grid 2
+       <></>
       </Grid>
     </Grid>
   );
