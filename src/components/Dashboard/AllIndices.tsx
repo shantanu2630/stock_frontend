@@ -6,47 +6,48 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
-import { EquityList } from "../../api/equityList";
-import { useEffect, useState } from "react";
 
 interface ResponseData {
   indexSymbol: string;
   last: number;
   percentChange: number;
-  variation:number;
+  variation: number;
 }
 
-const AllIndices = () => {
-  const [data, setData] = useState<ResponseData[] | null>(null);
+interface prop {
+  data: ResponseData[] | null;
+  setSelectedCard: React.Dispatch<React.SetStateAction<string | null>>;
+}
 
-  useEffect(() => {
-    const res = EquityList();
-    res.then((data: any) => setData(data));
-    
-  }, []);
-  
+const AllIndices = ({ data, setSelectedCard }: prop) => {
   return (
     <Box
       sx={{
         gridTemplateColumns: "repeat(auto-fill, minmax(min(15%, 100%), 1fr))",
         gap: 1,
-        display:"grid"
+        display: "grid",
       }}
     >
       {data &&
         data.map((item, key) => (
           <Card key={key}>
             <CardActionArea
-              //   onClick={() => setSelectedCard(index)}
+              onClick={() => setSelectedCard(item.indexSymbol)}
               //   data-active={selectedCard === index ? "" : undefined}
-
             >
               <CardHeader title={item.indexSymbol}></CardHeader>
-              <CardContent >
+              <CardContent>
                 <Typography m={0} p={0}>
                   {item.last}
                 </Typography>
-                <Typography fontSize={12} color={item.percentChange.toString().startsWith('+')?'error':'success'}>
+                <Typography
+                  fontSize={12}
+                  color={
+                    item.percentChange.toString().startsWith("+")
+                      ? "error"
+                      : "success"
+                  }
+                >
                   {item.variation} ({item.percentChange}%)
                 </Typography>
               </CardContent>
