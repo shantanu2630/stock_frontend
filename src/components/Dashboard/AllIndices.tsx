@@ -6,24 +6,16 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
-import { EquityList } from "../../api/equityList";
-import { useEffect, useState } from "react";
+import type { ResponseData } from "../../Page/Dashboard";
 
-interface ResponseData {
-  indexSymbol: string;
-  last: number;
-  percentChange: number;
+
+interface prop {
+  data: ResponseData[] | null;
+  setSelectedCard: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const AllIndices = () => {
-  const [data, setData] = useState<ResponseData[] | null>(null);
+const AllIndices = ({ data, setSelectedCard }: prop) => {
 
-  useEffect(() => {
-    const res = EquityList();
-    res.then((data: any) => setData(data));
-    
-  }, []);
-  console.log("data", data);
   return (
     <Box
       sx={{
@@ -31,15 +23,15 @@ const AllIndices = () => {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
         gap: 2,
-        border: "2px solid white",
+        // border: "2px solid white",
       }}
     >
       {data &&
         data.slice(0, 5).map((item, key) => (
-          <Card key={key}>
+          <Card key={key} sx={{ width: 180, height: 90 }}>
             <CardActionArea
-              //   onClick={() => setSelectedCard(index)}
-              //   data-active={selectedCard === index ? "" : undefined}
+                onClick={() => setSelectedCard(item.indexSymbol)}
+                // data-active={selectedCard === item.indexSymbol ? "" : undefined} 
               sx={{
                 height: "100%",
                 "&[data-active]": {
@@ -50,12 +42,28 @@ const AllIndices = () => {
                 },
               }}
             >
-              <CardHeader title={item.indexSymbol} />
-              <CardContent sx={{ height: "100%" }}>
-                <Typography variant="h5" component="div">
+              <CardHeader
+                title={item.indexSymbol}
+                sx={{
+                  p: 1,
+                  "& .MuiCardHeader-title": {
+                    fontSize: "0.8rem",
+                  },
+                }}
+              />
+              <CardContent sx={{ height: "100%", p: 1, pt: 0 }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: "0.9rem" }}
+                  component="div"
+                >
                   {item.last}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ fontSize: "0.7rem" }}
+                >
                   {item.percentChange}
                 </Typography>
               </CardContent>
