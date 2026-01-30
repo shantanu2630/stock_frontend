@@ -3,7 +3,7 @@
 import { Grid } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { EquityList, OneDayEquityData } from "../api/api";
+import { EquityList} from "../api/api";
 import IndicesInsights from "../components/Dashboard/IndicesInsights";
 import AllIndices from "../components/Dashboard/AllIndices";
 
@@ -23,18 +23,12 @@ const Dashboard = () => {
 
     const [data, setData] = useState<ResponseData[] | null>(null);
     const [selectedCard,setSelectedCard] = useState<string | null >(data?.[0].indexSymbol ?? null)
-    const [insightData,setInsightData] = useState<graphdata | null >(null);
+    
 
   useEffect(() => {
     const res = EquityList();
     res.then((data: any) => setData(data));
   }, []);
-
-  useEffect(() => {
-    OneDayEquityData(selectedCard).then((data) => setInsightData(data));
-  }, [selectedCard]);
-
-
 
   return (
     <Grid
@@ -42,13 +36,12 @@ const Dashboard = () => {
       width={"100vw"}
       sx={{ position: "fixed", top: 90,}}
     >
-      <Grid size={8} sx={{ border: "2px solid white" }}>
+      <Grid size={8} >
         <AllIndices data={data} setSelectedCard={setSelectedCard} />
-        <IndicesInsights indexName={selectedCard} insightData={insightData} />
+        <IndicesInsights indexName={selectedCard}  />
       </Grid>
       <Grid
         size={4}
-       
       >
        <></>
       </Grid>
