@@ -18,52 +18,46 @@ const options: ChartOptions<"line"> = {
 };
 
 const IndicesInsights = ({ indexName }: prop) => {
-
   const [insightData, setInsightData] = useState<graphdata | null>(null);
 
   useEffect(() => {
     OneDayEquityData(indexName).then((data) => setInsightData(data));
   }, [indexName]);
 
-  console.log(indexName);
-  console.log(insightData);
+  // console.log(indexName);
+  // console.log(insightData);
 
-  let time: string[]=[] ;
-  let priceArray: number[]=[] ;
-  
+  let time: string[] = [];
+  let priceArray: number[] = [];
 
-const timeConversion =()=>{
-   if (insightData) {
-     insightData.forEach(([timestamp],key) => {
-      if(key%3===0)
-      {
-       time.push(
-         new Date(timestamp).toLocaleString("en-IN", {
-           timeZone: "Asia/Kolkata",
-           hour: "2-digit",
-           minute: "2-digit",
-           second: "2-digit",
-         })
-       );
-      }
-     });
-   }
-   return time;
-}
+  const timeConversion = () => {
+    if (insightData) {
+      insightData.forEach(([timestamp], key) => {
+        if (key % 15 === 0) {
+          time.push(
+            new Date(timestamp).toLocaleString("en-IN", {
+              timeZone: "Asia/Kolkata",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            }),
+          );
+        }
+      });
+    }
+    return time;
+  };
 
-const priceConversion =()=>{
-   if (insightData) {
-     insightData.forEach(([ , price],key) => {
-       if(key%3===0)
-       {
-        priceArray.push(price);
-       }
-     });
-   }
-   return priceArray;
-}
-
-
+  const priceConversion = () => {
+    if (insightData) {
+      insightData.forEach(([, price], key) => {
+        if (key % 3 === 0) {
+          priceArray.push(price);
+        }
+      });
+    }
+    return priceArray;
+  };
 
   const tempdata: ChartData<"line", number[], string> = {
     labels: timeConversion(),
@@ -78,7 +72,7 @@ const priceConversion =()=>{
     ],
   };
   return (
-    <div style={{ height: 850,width: "100%" }}>
+    <div style={{ height: 850, width: "100%" }}>
       <Line data={tempdata} options={options} />
     </div>
   );

@@ -22,7 +22,7 @@ export type graphdata = InsightData[] | null;
 const Dashboard = () => {
 
     const [data, setData] = useState<ResponseData[] | null>(null);
-    const [selectedCard,setSelectedCard] = useState<string | null >(data?.[0].indexSymbol ?? null)
+    const [selectedCard,setSelectedCard] = useState<string | null >(data?.[0].indexSymbol ?? "NIFTY 50")
     
 
   useEffect(() => {
