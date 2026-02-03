@@ -2,6 +2,7 @@ import { Line } from "react-chartjs-2";
 import type { ChartData, ChartOptions } from "chart.js";
 
 import { graphdata } from "../../Page/Dashboard";
+import { Box } from "@mui/material";
 
 interface prop {
   indexName: string | null;
@@ -81,11 +82,9 @@ const IndicesInsights = ({ indexName, insightData, interval }: prop) => {
     ],
   };
   return (
-    <>
-      <div style={{ height: 850, width: "100%" }}>
-        <Line data={tempdata} options={options} />
-      </div>
-    </>
+    <Box style={{ height: '74%', width: "100.5%" }}>
+      <Line height={'100%'} data={tempdata} options={options} />
+    </Box>
   );
 };
 

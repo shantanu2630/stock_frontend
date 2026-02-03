@@ -7,6 +7,7 @@ import { EquityList, intervalEquityData } from "../api/api";
 import IndicesInsights from "../components/Dashboard/IndicesInsights";
 import AllIndices from "../components/Dashboard/AllIndices";
 import IntervalButton from "../components/Dashboard/IntervalButton";
+import IndicesList from "../components/Dashboard/IndicesList";
 
 export type ResponseData = {
   indexSymbol: string;
@@ -37,13 +38,21 @@ const Dashboard = () => {
   }, [selectedCard,interval]);
 
   return (
-    <Grid container width={"100vw"} sx={{ position: "fixed", top: 90 }}>
-      <Grid size={8}>
+    <Grid
+      container
+      width={"100vw"}
+      height={'100vh'}
+      sx={{ position: "fixed", top: 90,marginLeft:2}}
+    >
+      <Grid size={8} >
         <AllIndices data={data} setSelectedCard={setSelectedCard} />
         <IntervalButton  interval={interval} handleSetInterval={setInterval} />
         <IndicesInsights indexName={selectedCard} insightData={insightData} interval={interval} />
       </Grid>
-      <Grid size={4}>
+      <Grid
+        size={4}
+      >
+       <IndicesList/>
       </Grid>
     </Grid>
   );
