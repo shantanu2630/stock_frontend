@@ -43,7 +43,7 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
                 <Typography
                   fontSize={12}
                   color={
-                    item.percentChange.toString().startsWith("+")
+                    item.percentChange.toString().startsWith("-")
                       ? "error"
                       : "success"
                   }

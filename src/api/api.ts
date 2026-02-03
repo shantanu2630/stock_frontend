@@ -19,14 +19,27 @@ export async function EquityList(): Promise<ListResponse> {
   }
 }
 
-  export async function OneDayEquityData(payload:string|null): Promise<any> {
+  // export async function OneDayEquityData(payload:string|null): Promise<any> {
+  //   try{
+  //     const response = await fetch(`http://0.0.0.0:3000/oneDayInsights?indexSymbol=${payload}`);
+  //     // console.log(payload)
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.log("Error fetching data", error);
+  //     throw error;
+  //   }
+
+  // }
+
+
+  export async function intervalEquityData(payload:string|null, interval:string|null): Promise<any>{
     try{
-      const response = await fetch(`http://0.0.0.0:3000/oneDayInsights?indexSymbol=${payload}`);
-      console.log(payload)
+      const response = await fetch(`http://0.0.0.0:3000/intervalEquityData?indexSymbol=${payload}&&interval=${interval}`);
       const data = await response.json();
       return data;
-    } catch (error) {
-      console.log("Error fetching data", error);
+    }catch(error){
+      console.log("Error fetching Data",error);
       throw error;
     }
 
