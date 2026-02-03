@@ -37,13 +37,13 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
             >
               <CardHeader title={item.indexSymbol}></CardHeader>
               <CardContent>
-                <Typography m={0} p={0}>
+                <Typography color="primary.main" m={0} p={0}>
                   {item.last}
                 </Typography>
                 <Typography
                   fontSize={12}
                   color={
-                    item.percentChange.toString().startsWith("+")
+                    item.percentChange.toString().startsWith("-")
                       ? "error"
                       : "success"
                   }

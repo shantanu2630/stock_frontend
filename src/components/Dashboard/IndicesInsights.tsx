@@ -3,6 +3,7 @@ import type { ChartData, ChartOptions } from "chart.js";
 import type { graphdata } from "../../Page/Dashboard";
 import { OneDayEquityData } from "../../api/api";
 import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 
 interface prop {
   indexName: string | null;
@@ -15,6 +16,24 @@ const options: ChartOptions<"line"> = {
   plugins: {
     tooltip: { mode: "index", intersect: false },
   },
+  scales: {
+    x: {
+      grid: {
+        display: false, // removes vertical grid lines
+      },
+      ticks: {
+        maxTicksLimit: 10,
+      },
+    },
+    y: {
+      grid: {
+        display: false, // removes horizontal grid lines
+      },
+      ticks: {
+        maxTicksLimit: 20,
+      },
+    },
+  },
 };
 
 const IndicesInsights = ({ indexName }: prop) => {
@@ -24,25 +43,16 @@ const IndicesInsights = ({ indexName }: prop) => {
     OneDayEquityData(indexName).then((data) => setInsightData(data));
   }, [indexName]);
 
-  // console.log(indexName);
-  // console.log(insightData);
-
   let time: string[] = [];
   let priceArray: number[] = [];
 
   const timeConversion = () => {
     if (insightData) {
-      insightData.forEach(([timestamp], key) => {
-        if (key % 15 === 0) {
-          time.push(
-            new Date(timestamp).toLocaleString("en-IN", {
-              timeZone: "Asia/Kolkata",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            }),
-          );
-        }
+      insightData.forEach(([timestamp]) => {
+        const date = new Date(timestamp); // timestamp in ms
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        time.push(`${hours}:${minutes}`);
       });
     }
     return time;
@@ -50,10 +60,8 @@ const IndicesInsights = ({ indexName }: prop) => {
 
   const priceConversion = () => {
     if (insightData) {
-      insightData.forEach(([, price], key) => {
-        if (key % 3 === 0) {
-          priceArray.push(price);
-        }
+      insightData.forEach(([, price]) => {
+        priceArray.push(price);
       });
     }
     return priceArray;
@@ -72,9 +80,9 @@ const IndicesInsights = ({ indexName }: prop) => {
     ],
   };
   return (
-    <div style={{ height: 850, width: "100%" }}>
-      <Line data={tempdata} options={options} />
-    </div>
+    <Box style={{ height: '74%', width: "100.5%" }}>
+      <Line height={'100%'} data={tempdata} options={options} />
+    </Box>
   );
 };
 

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { EquityList} from "../api/api";
 import IndicesInsights from "../components/Dashboard/IndicesInsights";
 import AllIndices from "../components/Dashboard/AllIndices";
+import IndicesList from "../components/Dashboard/IndicesList";
 
 export type ResponseData = {
   indexSymbol: string;
@@ -34,7 +35,8 @@ const Dashboard = () => {
     <Grid
       container
       width={"100vw"}
-      sx={{ position: "fixed", top: 90,}}
+      height={'100vh'}
+      sx={{ position: "fixed", top: 90,marginLeft:2}}
     >
       <Grid size={8} >
         <AllIndices data={data} setSelectedCard={setSelectedCard} />
@@ -43,7 +45,7 @@ const Dashboard = () => {
       <Grid
         size={4}
       >
-       <></>
+       <IndicesList/>
       </Grid>
     </Grid>
   );
