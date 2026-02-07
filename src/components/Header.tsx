@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, InputBase, styled, TextField, Typography } from "@mui/material";
+import { alpha, Box, Grid, InputBase, styled, Typography } from "@mui/material";
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -10,12 +10,8 @@ import SearchIcon from '@mui/icons-material/Search';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
+  borderColor:theme.palette.common.black,
+  backgroundColor: theme.palette.common.white,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -31,10 +27,15 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color:theme.palette.common.black
+
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: theme.palette.common.black,
+  border: `1px solid ${theme.palette.common.black}`,
+  borderRadius:4,
+  width:"100%",
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -42,7 +43,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '100%',
     },
   },
 }));
@@ -109,19 +110,9 @@ export default function Header() {
               </Box>
             </Typography>
           </Grid>
-          <Grid size={6}>
-            {/* <TextField
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "primary.main" },
-                  "&:hover fieldset": { borderColor: "secondary.main" },
-                  "&.Mui-focused fieldset": { borderColor: "secondary.main" },
-                },
-              }}
-              size="small"
-              fullWidth
-            /> */}
-            <Search>
+          <Grid size={6} >
+          
+            <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
