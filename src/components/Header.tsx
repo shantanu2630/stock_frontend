@@ -1,4 +1,4 @@
-import { Box, Grid,  TextField, Typography } from "@mui/material";
+import {  Box, Grid, InputBase, styled, Typography } from "@mui/material";
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,6 +6,48 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LiveHelpOutlinedIcon from '@mui/icons-material/LiveHelpOutlined';
 import { Link } from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  borderColor:theme.palette.common.black,
+  backgroundColor: theme.palette.common.white,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color:theme.palette.common.black
+
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: theme.palette.common.black,
+  border: `1px solid ${theme.palette.common.black}`,
+  borderRadius:4,
+  width:"100%",
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '100%',
+    },
+  },
+}));
 
 
 export default function Header() {
@@ -32,7 +74,7 @@ export default function Header() {
         }}
       >
         <Grid container sx={{ height: "100%" }}>
-          <Grid size={3}>
+          <Grid size={2.1}>
             {/* LEFT PART */}
             <Typography
               color="primary.main"
@@ -71,10 +113,19 @@ export default function Header() {
               </Box>
             </Typography>
           </Grid>
-          <Grid size={6}>
-            <TextField  size="small" fullWidth/>
+          <Grid size={6} >
+          
+            <Search >
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           </Grid>
-          <Grid size={3}>
+          <Grid ml={1} size={3.65} height={"10%"}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -83,7 +134,7 @@ export default function Header() {
               <Link to='/'>
               <Tab icon={<HomeOutlinedIcon />} aria-label="home" ></Tab></Link>
               <Tab icon={<AccountCircleOutlinedIcon />} aria-label="person" />
-              <Tab icon={<LiveHelpOutlinedIcon/>} aria-label="favorite" />
+              <Tab icon={<LiveHelpOutlinedIcon />} aria-label="favorite" />
             </Tabs>
           </Grid>
         </Grid>
