@@ -1,10 +1,12 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid,  TextField, Typography } from "@mui/material";
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LiveHelpOutlinedIcon from '@mui/icons-material/LiveHelpOutlined';
+import { Link } from "react-router-dom";
+
 
 export default function Header() {
   const now = new Date();
@@ -78,7 +80,8 @@ export default function Header() {
               onChange={handleChange}
               aria-label="icon tabs example"
             >
-              <Tab icon={<HomeOutlinedIcon />} aria-label="home" />
+              <Link to='/'>
+              <Tab icon={<HomeOutlinedIcon />} aria-label="home" ></Tab></Link>
               <Tab icon={<AccountCircleOutlinedIcon />} aria-label="person" />
               <Tab icon={<LiveHelpOutlinedIcon/>} aria-label="favorite" />
             </Tabs>

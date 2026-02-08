@@ -20,6 +20,7 @@ interface prop {
 }
 
 const AllIndices = ({ data, setSelectedCard }: prop) => {
+
   return (
     <Box
       sx={{
@@ -29,7 +30,7 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
       }}
     >
       {data &&
-        data.map((item, key) => (
+        data.slice(0,6).map((item, key) => (
           <Card key={key}>
             <CardActionArea
               onClick={() => setSelectedCard(item.indexSymbol)}

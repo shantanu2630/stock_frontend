@@ -5,17 +5,24 @@ import "./App.css";
 import Header from "./components/Header";
 import Dashboard from "./Page/Dashboard";
 import { theme } from "./theme";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Test from "./components/Dashboard/test";
 // import WebSockets from "./components/WebSockets";
 
 function App() {
-  return (
+  return (  
     <ThemeProvider theme={theme}>
-   <Header /> 
-      <Dashboard />
-      {/* <WebSockets/> */}
-</ThemeProvider>
      
-   
+
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/test" element={<Test/>} />
+
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

@@ -16,6 +16,7 @@ export type ResponseData = {
   variation: number;
 };
 export type InsightData = [time: string, price: number];
+
 export type graphdata = InsightData[] | null;
 
 const Dashboard = () => {
@@ -52,7 +53,7 @@ const Dashboard = () => {
       <Grid
         size={4}
       >
-       <IndicesList/>
+       <IndicesList data={data}/>
       </Grid>
     </Grid>
   );

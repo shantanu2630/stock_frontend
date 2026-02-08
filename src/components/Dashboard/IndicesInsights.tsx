@@ -14,6 +14,7 @@ const options: ChartOptions<"line"> = {
   responsive: true,
   plugins: {
     tooltip: { mode: "index", intersect: false },
+    
   },
   scales: {
     x: {
@@ -21,11 +22,14 @@ const options: ChartOptions<"line"> = {
         maxTicksLimit: 10, // ✅ X-axis labels
         autoSkip: true, // important for large datasets
       },
+      grid: { display: false },
     },
     y: {
       ticks: {
         maxTicksLimit: 20, // ✅ Y-axis labels
       },
+      grid: { display: false },
+      
     },
   },
 };
