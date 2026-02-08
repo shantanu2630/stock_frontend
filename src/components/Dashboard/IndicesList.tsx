@@ -14,7 +14,6 @@ import {
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
 
-
 interface ResponseData {
   indexSymbol: string;
   last: number;
@@ -22,11 +21,8 @@ interface ResponseData {
   variation: number;
 }
 
-
 interface Props {
   data: ResponseData[] | null;
-
-
 }
 
 type Data = ResponseData & { id: number };
@@ -41,16 +37,15 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key
+  orderBy: Key,
 ): (
   a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
+  b: { [key in Key]: number | string },
 ) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 
 interface HeadCell {
   id: keyof Data;
@@ -65,13 +60,7 @@ const headCells: readonly HeadCell[] = [
   // { id: "variation", label: "Change", numeric: true },
 ];
 
-
-
-
 function IndicesList({ data }: Props) {
-
-
-
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("last");
   const [page, setPage] = React.useState(0);
@@ -89,7 +78,7 @@ function IndicesList({ data }: Props) {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: keyof Data,
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -101,23 +90,24 @@ function IndicesList({ data }: Props) {
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleStockDetails = (indexSymbol:string) =>{
-    navigate(`/test?symbol=${indexSymbol}`)
-  }
+  const handleStockDetails = (indexSymbol: string) => {
+    navigate(`/test?symbol=${indexSymbol}`);
+  };
 
   const visibleRows = React.useMemo(
     () =>
       [...rows]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [order, orderBy, page, rowsPerPage, rows]
+    [order, orderBy, page, rowsPerPage, rows],
   );
+  // console.log(headCells)
 
   return (
     <Box sx={{ width: "90%" }}>
@@ -135,9 +125,7 @@ function IndicesList({ data }: Props) {
                     <TableSortLabel
                       active={orderBy === headCell.id}
                       direction={orderBy === headCell.id ? order : "asc"}
-                      onClick={(event) =>
-                        handleRequestSort(event, headCell.id)
-                      }
+                      onClick={(event) => handleRequestSort(event, headCell.id)}
                     >
                       {headCell.label}
                       {orderBy === headCell.id ? (
@@ -161,10 +149,44 @@ function IndicesList({ data }: Props) {
                   sx={{ cursor: "pointer" }}
                   onClick={() => handleStockDetails(row.indexSymbol)}
                 >
-                  <TableCell>{row.indexSymbol}</TableCell>
-                  <TableCell align="right">{row.last}</TableCell>
+                  <TableCell>
+                    <Box
+                      component="span"
+                      sx={{
+                        color:
+                          row.percentChange < 0 ? "error.main" : "success.main",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {" "}
+                      {row.indexSymbol}
+                    </Box>
+                  </TableCell>
                   <TableCell align="right">
-                    {row.percentChange}% ({row.variation})
+                    <Box
+                      component="span"
+                      sx={{
+                        color:
+                          row.percentChange < 0 ? "error.main" : "success.main",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {" "}
+                      {row.last}
+                    </Box>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box
+                      component="span"
+                      sx={{
+                        color:
+                          row.percentChange < 0 ? "error.main" : "success.main",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {" "}
+                      {row.percentChange}% ({row.variation})
+                    </Box>
                   </TableCell>
                   {/* <TableCell align="right">{row.variation}</TableCell> */}
                 </TableRow>

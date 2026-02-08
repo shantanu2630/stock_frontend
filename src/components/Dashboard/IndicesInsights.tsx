@@ -54,25 +54,28 @@ const IndicesInsights = ({ indexName, insightData, interval }: prop) => {
   let priceArray: number[] = [];
 
   const timeConversion = () => {
-    if (insightData) {
-      insightData.forEach(([timestamp]) => {
-        time.push(
-          interval === "1D"
-            ? new Date(timestamp).toLocaleTimeString("en-IN", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              })
-            : new Date(timestamp).toLocaleDateString("en-IN", {
-                day: "2-digit",
-                month: "short",
-              }),
-        );
-      });
-    }
 
-    return time;
-  };
+
+  if (insightData) {
+    insightData.forEach(([timestamp]) => {
+      const date = new Date(timestamp);
+
+      time.push(
+        interval === "1D"
+          ? `${String(date.getUTCHours()).padStart(2, "0")}:${String(
+              date.getUTCMinutes()
+            ).padStart(2, "0")}`
+          : `${String(date.getUTCDate()).padStart(2, "0")} ${date.toLocaleString(
+              "en-US",
+              { month: "short", timeZone: "UTC" }
+            )}`
+      );
+    });
+  }
+
+  return time;
+};
+
 
   const priceConversion = () => {
     if (insightData) {
