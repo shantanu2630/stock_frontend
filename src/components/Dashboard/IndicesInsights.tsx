@@ -1,8 +1,13 @@
 import { Line } from "react-chartjs-2";
 import type { ChartData, ChartOptions } from "chart.js";
-
+import { Chart as ChartJS } from "chart.js";
 import { graphdata } from "../../Page/Dashboard";
 import { Box } from "@mui/material";
+import { theme } from "../../theme";
+import zoomPlugin from "chartjs-plugin-zoom";
+// import { useRef } from "react";
+
+ChartJS.register(zoomPlugin);
 
 interface prop {
   indexName: string | null;
@@ -12,9 +17,20 @@ interface prop {
 
 const options: ChartOptions<"line"> = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
+    zoom: {
+      zoom: {
+        wheel: {
+          enabled: true, // ✅ zoom with mouse wheel
+        },
+        pinch: {
+          enabled: true, // ✅ zoom with pinch gesture
+        },
+        mode: "x", // zoom only on X axis (use "xy" for both axes)
+      },
+    },
     tooltip: { mode: "index", intersect: false },
-    
   },
   scales: {
     x: {
@@ -29,7 +45,6 @@ const options: ChartOptions<"line"> = {
         maxTicksLimit: 20, // ✅ Y-axis labels
       },
       grid: { display: false },
-      
     },
   },
 };
@@ -41,20 +56,18 @@ const IndicesInsights = ({ indexName, insightData, interval }: prop) => {
   const timeConversion = () => {
     if (insightData) {
       insightData.forEach(([timestamp]) => {
-        
-          time.push(
-            interval === "1D"
-              ? new Date(timestamp).toLocaleTimeString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })
-              : new Date(timestamp).toLocaleDateString("en-IN", {
-                  day: "2-digit",
-                  month: "short",
-                }),
-          );
-        
+        time.push(
+          interval === "1D"
+            ? new Date(timestamp).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })
+            : new Date(timestamp).toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+              }),
+        );
       });
     }
 
@@ -64,9 +77,7 @@ const IndicesInsights = ({ indexName, insightData, interval }: prop) => {
   const priceConversion = () => {
     if (insightData) {
       insightData.forEach(([, price]) => {
-        
-          priceArray.push(price);
-        
+        priceArray.push(price);
       });
     }
     return priceArray;
@@ -74,20 +85,38 @@ const IndicesInsights = ({ indexName, insightData, interval }: prop) => {
 
   const tempdata: ChartData<"line", number[], string> = {
     labels: timeConversion(),
+
     datasets: [
       {
         label: indexName ?? " ",
         data: priceConversion(),
-        fill: true,
+        fill: false,
         backgroundColor: "rgb(122, 199, 243)",
-        borderColor: "rgb(191, 189, 189)",
+        segment: {
+          borderColor: (ctx) =>
+            ctx.p0.parsed.y &&
+            ctx.p1.parsed.y &&
+            ctx.p0.parsed.y > ctx.p1.parsed.y
+              ? theme.palette.error.main
+              : theme.palette.secondary.main,
+        },
         tension: 0.1,
+        pointRadius: 0,
       },
     ],
   };
+
+  // const chartRef = useRef<any>(null);
+  // const resetZoom = () => {
+  //   if (chartRef.current) {
+  //     chartRef.current.resetZoom();
+  //   }
+  // };
   return (
-    <Box style={{ height: '74%', width: "100.5%" }}>
-      <Line height={'100%'} data={tempdata} options={options} />
+    <Box style={{ height: 480, width: "100%" }}>
+      {/* <Line ref={chartRef} height={"100%"} data={tempdata} options={options} /> */}
+      <Line  data={tempdata} options={options} />
+      {/* <button onClick={resetZoom}>Reset Zoom</button> */}
     </Box>
   );
 };

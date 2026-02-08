@@ -40,8 +40,8 @@ const IntervalButton = ({handleSetInterval,interval}:prop) => {
     exclusive: true,
   };
   return (
-    <Stack spacing={2} sx={{ alignItems: "center" }}>
-      <ToggleButtonGroup size="small" {...control} aria-label="Small sizes">
+    <Stack sx={{ alignItems: "end" ,mt:3}}>
+      <ToggleButtonGroup size="medium" {...control} >
         {children}
       </ToggleButtonGroup>
     </Stack>

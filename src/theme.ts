@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 
 export const theme = createTheme({
   palette: {
@@ -9,6 +9,9 @@ export const theme = createTheme({
     secondary: {
       main: green[500],
     },
+    error:{
+      main:red[500]
+    }
   },
   components: {
     MuiCard: {
