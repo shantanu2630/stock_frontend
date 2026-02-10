@@ -7,6 +7,7 @@ import Dashboard from "./Page/Dashboard";
 import { theme } from "./theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Test from "./components/Dashboard/Test";
+import Head from "./components/Head";
 
 
 // import WebSockets from "./components/WebSockets";
@@ -14,10 +15,8 @@ import Test from "./components/Dashboard/Test";
 function App() {
   return (  
     <ThemeProvider theme={theme}>
-     
-
       <BrowserRouter>
-        <Header />
+        <Head/>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/test" element={<Test/>} />

@@ -18,7 +18,10 @@ interface prop {
 const options: ChartOptions<"line"> = {
   responsive: true,
   maintainAspectRatio: false,
+  
   plugins: {
+    legend: { display: false, // ✅ hides the label/legend 
+    },
     zoom: {
       zoom: {
         wheel: {
@@ -30,7 +33,7 @@ const options: ChartOptions<"line"> = {
         mode: "x", // zoom only on X axis (use "xy" for both axes)
       },
     },
-    tooltip: { mode: "index", intersect: false },
+    tooltip: { mode: "nearest", intersect: false,displayColors: false,},
   },
   scales: {
     x: {
@@ -45,6 +48,7 @@ const options: ChartOptions<"line"> = {
         maxTicksLimit: 20, // ✅ Y-axis labels
       },
       grid: { display: false },
+      
     },
   },
 };

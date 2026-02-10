@@ -1,20 +1,45 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton, { toggleButtonClasses } from '@mui/material/ToggleButton';
+import ToggleButtonGroup, {
+  toggleButtonGroupClasses,
+} from '@mui/material/ToggleButtonGroup';
+import { styled } from '@mui/material/styles';
 
 interface prop {
   handleSetInterval: React.Dispatch<React.SetStateAction<string | null>>;
   interval : string | null ;
 }
 
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  gap: '1rem',
+  [`& .${toggleButtonGroupClasses.firstButton}, & .${toggleButtonGroupClasses.middleButton}`]:
+    {
+      borderTopRightRadius: (theme.vars || theme).shape.borderRadius,
+      borderBottomRightRadius: (theme.vars || theme).shape.borderRadius,
+    },
+  [`& .${toggleButtonGroupClasses.lastButton}, & .${toggleButtonGroupClasses.middleButton}`]:
+    {
+      borderTopLeftRadius: (theme.vars || theme).shape.borderRadius,
+      borderBottomLeftRadius: (theme.vars || theme).shape.borderRadius,
+      borderLeft: `1px solid ${(theme.vars || theme).palette.divider}`,
+    },
+  [`& .${toggleButtonGroupClasses.lastButton}.${toggleButtonClasses.disabled}, & .${toggleButtonGroupClasses.middleButton}.${toggleButtonClasses.disabled}`]:
+    {
+      borderLeft: `1px solid ${(theme.vars || theme).palette.action.disabledBackground}`,
+    },
+}));
+
 const IntervalButton = ({handleSetInterval,interval}:prop) => {
-  const handleChange = (
+ 
+
+  const handleAlignment = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string,
+    newAlignment: string | null,
   ) => {
     handleSetInterval(newAlignment);
   };
+ 
 
   const children = [
     <ToggleButton value="1D" key="1D">
@@ -36,14 +61,19 @@ const IntervalButton = ({handleSetInterval,interval}:prop) => {
 
   const control = {
     value: interval,
-    onChange: handleChange,
+    onChange: handleAlignment,
     exclusive: true,
   };
   return (
     <Stack sx={{ alignItems: "end" ,mt:3}}>
-      <ToggleButtonGroup size="medium" {...control} >
+      
+      <StyledToggleButtonGroup
+      size="medium"
+      
+      {...control}
+    >
         {children}
-      </ToggleButtonGroup>
+      </StyledToggleButtonGroup>
     </Stack>
   );
 };

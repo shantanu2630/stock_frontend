@@ -6,6 +6,7 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 interface ResponseData {
   indexSymbol: string;
@@ -25,13 +26,15 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
     <Box
       sx={{
         gridTemplateColumns: "repeat(auto-fill, minmax(min(15%, 100%), 1fr))",
-        gap: 1,
+        gap: 2,
         display: "grid",
       }}
     >
       {data &&
         data.slice(0,6).map((item, key) => (
-          <Card key={key}>
+          <Card key={key} sx={{backgroundColor:item.percentChange.toString().startsWith("-")
+                      ? "#ffecec"
+                      : "#ebf6f8"}}>
             <CardActionArea
               onClick={() => setSelectedCard(item.indexSymbol)}
               //   data-active={selectedCard === index ? "" : undefined}
