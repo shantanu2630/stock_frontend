@@ -53,34 +53,30 @@ export async function EquityList(): Promise<ListResponse> {
 
 // }
 
-export async function intervalEquityData(
-  payload: string | null,
-  interval: string | null,
-): Promise<any> {
-  try {
-    const response = await fetch(
-      `http://0.0.0.0:3000/intervalEquityData?indexSymbol=${payload}&&interval=${interval}`,
-    );
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log("Error fetching Data", error);
-    throw error;
-  }
-}
+  
 
-export async function SymbolGraphData(
-  payload: string | null,
-  interval: string | null,
-): Promise<any> {
-  try {
-    const response = await fetch(
-      `http://0.0.0.0:3000/stockGraphData?indexSymbol=${payload}&&interval=${interval}`,
-    );
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log("Error fetching Stock Graph Data", error);
-    throw error;
+
+  export async function intervalEquityData(payload:string|null, interval:string|null): Promise<any>{
+    try{
+      const response = await fetch(`http://0.0.0.0:3000/intervalEquityData?indexSymbol=${payload}&&interval=${interval}`);
+      const data = await response.json();
+      return data;
+    }catch(error){
+      console.log("Error fetching Data",error);
+      throw error;
+    }
+
   }
-}
+
+  export async function useFetchDataByIndexName(payload:string|null): Promise<any>{
+    try{
+      const response = await fetch(`http://0.0.0.0:3000/dataByIndexName?indexSymbol=${payload}`);
+      const data = await response.json();
+      console.log(data);
+      return data;
+    }catch(error){
+      console.log("Error fetching Data",error);
+      throw error;
+    }
+
+  }

@@ -53,7 +53,7 @@ const Dashboard = () => {
       <Grid
         size={4}
       >
-       <IndicesList data={data}/>
+       <IndicesList indexName={selectedCard}/>
       </Grid>
     </Grid>
   );

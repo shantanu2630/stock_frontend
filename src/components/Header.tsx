@@ -71,6 +71,7 @@ export default function Header() {
           height: 90,
           borderRadius: 2,
           margin: 2,
+        
         }}
       >
         <Grid container sx={{ height: "100%" }}>
