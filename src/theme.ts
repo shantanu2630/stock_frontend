@@ -11,7 +11,8 @@ export const theme = createTheme({
     },
     error:{
       main:red[500]
-    }
+    },
+    warning:{main:"#FFBF00"}
   },
   components: {
     MuiCard: {
@@ -19,7 +20,7 @@ export const theme = createTheme({
         root: {
           backgroundColor: "transparent",
           height: "11vh",
-          width: "11vw",
+          width: "10vw",
           
         },
       },

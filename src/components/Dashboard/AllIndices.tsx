@@ -4,8 +4,12 @@ import {
   CardActionArea,
   CardContent,
   CardHeader,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import { useNavigate } from "react-router-dom";
 
 interface ResponseData {
   indexSymbol: string;
@@ -20,21 +24,20 @@ interface prop {
 }
 
 const AllIndices = ({ data, setSelectedCard }: prop) => {
-
+  console.log(data)
+const navigate=useNavigate()
   return (
-    <Box
+    <><Box
       sx={{
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(15%, 100%), 1fr))",
-        gap: 1,
-        display: "grid",
+       display:"flex",
+       gap:1
       }}
     >
       {data &&
-        data.slice(0,6).map((item, key) => (
+        data.slice(0, 6).map((item, key) => (
           <Card key={key}>
             <CardActionArea
               onClick={() => setSelectedCard(item.indexSymbol)}
-              //   data-active={selectedCard === index ? "" : undefined}
             >
               <CardHeader title={item.indexSymbol}></CardHeader>
               <CardContent>
@@ -43,11 +46,9 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
                 </Typography>
                 <Typography
                   fontSize={12}
-                  color={
-                    item.percentChange.toString().startsWith("-")
-                      ? "error"
-                      : "success"
-                  }
+                  color={item.percentChange.toString().startsWith("-")
+                    ? "error"
+                    : "success"}
                 >
                   {item.variation} ({item.percentChange}%)
                 </Typography>
@@ -55,7 +56,10 @@ const AllIndices = ({ data, setSelectedCard }: prop) => {
             </CardActionArea>
           </Card>
         ))}
-    </Box>
+        <Tooltip title='Click to see all index'>
+        <IconButton onClick={()=>navigate("/allIndices")} size="small" ><ArrowForwardIosOutlinedIcon fontSize='medium' color="warning"/></IconButton>
+        </Tooltip>
+    </Box></>
   );
 };
 

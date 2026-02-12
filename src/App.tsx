@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Dashboard from "./Page/Dashboard";
 import { theme } from "./theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Test from "./components/Dashboard/Test";
+import AllIndicesComp from "./components/Dashboard/AllIndicesComp";
 
 
 // import WebSockets from "./components/WebSockets";
@@ -20,8 +20,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/test" element={<Test/>} />
-
+          <Route path="/allIndices" element={<AllIndicesComp/>} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

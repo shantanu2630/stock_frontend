@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
+import { useFetchDataByIndexName } from "../../api/api";
 
 interface ResponseData {
   indexSymbol: string;
@@ -22,7 +23,7 @@ interface ResponseData {
 }
 
 interface Props {
-  data: ResponseData[] | null;
+  indexName: string | null;
 }
 
 type Data = ResponseData & { id: number };
@@ -60,17 +61,25 @@ const headCells: readonly HeadCell[] = [
   // { id: "variation", label: "Change", numeric: true },
 ];
 
-function IndicesList({ data }: Props) {
+function IndicesList({ indexName }: Props) {
   const [order, setOrder] = React.useState<Order>("asc");
+  const [data, setData] = React.useState<any>([]);
   const [orderBy, setOrderBy] = React.useState<keyof Data>("last");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    const response = useFetchDataByIndexName(indexName);
+    response.then((data) =>
+      setData(data)
+    );
+  }, [indexName]);
+
   const rows: Data[] = React.useMemo(() => {
     if (!data) return [];
-    return data.map((item, index) => ({
+    return data.map((item: any, index: number) => ({
       id: index + 1,
       ...item,
     }));
