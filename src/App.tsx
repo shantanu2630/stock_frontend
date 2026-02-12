@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Dashboard from "./Page/Dashboard";
 import { theme } from "./theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Test from "./components/Dashboard/Test";
+import StockOverview from "./Page/StockOverview";
 
 
 // import WebSockets from "./components/WebSockets";
@@ -20,7 +20,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/test" element={<Test/>} />
+          <Route path="/stock-overview/:symbol" element={<StockOverview />} />
 
         </Routes>
       </BrowserRouter>

@@ -97,7 +97,7 @@ function IndicesList({ data }: Props) {
   };
 
   const handleStockDetails = (indexSymbol: string) => {
-    navigate(`/test?symbol=${indexSymbol}`);
+    navigate(`/stock-overview/${indexSymbol}`);
   };
 
   const visibleRows = React.useMemo(
