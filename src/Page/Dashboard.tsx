@@ -28,32 +28,53 @@ const Dashboard = () => {
   const [interval, setInterval] = useState<string | null>("1D");
   const [insightData, setInsightData] = useState<graphdata | null>(null);
 
-
+  // useEffect(() => {
+  //   const res = EquityList();
+  //   res.then((data: any) => setData(data));
+  // }, []);
   useEffect(() => {
-    const res = EquityList();
-    res.then((data: any) => setData(data));
+    const ws = new WebSocket("ws://127.0.0.1:8000");
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data)
+      setData(data);
+    };
+    console.log(data)
+    ws.onerror = (err) => {
+      console.error("WebSocket error:", err);
+    };
+    ws.onclose = () => {
+      console.log("WebSocket closed");
+    };
+    return () => ws.close();
   }, []);
 
+  console.log(data);
+
   useEffect(() => {
-    intervalEquityData(selectedCard,interval).then((data) => setInsightData(data));
-  }, [selectedCard,interval]);
+    intervalEquityData(selectedCard, interval).then((data) =>
+      setInsightData(data),
+    );
+  }, [selectedCard, interval]);
 
   return (
     <Grid
       container
       width={"100vw"}
-      height={'100vh'}
-      sx={{ position: "fixed", top: 90,marginLeft:2}}
+      height={"100vh"}
+      sx={{ position: "fixed", top: 90, marginLeft: 2 }}
     >
-      <Grid size={8} >
+      <Grid size={8}>
         <AllIndices data={data} setSelectedCard={setSelectedCard} />
-        <IntervalButton  interval={interval} handleSetInterval={setInterval} />
-        <IndicesInsights indexName={selectedCard} insightData={insightData} interval={interval} />
+        <IntervalButton interval={interval} handleSetInterval={setInterval} />
+        <IndicesInsights
+          indexName={selectedCard}
+          insightData={insightData}
+          interval={interval}
+        />
       </Grid>
-      <Grid
-        size={4}
-      >
-       <IndicesList indexName={selectedCard}/>
+      <Grid size={4}>
+        <IndicesList indexName={selectedCard} />
       </Grid>
     </Grid>
   );

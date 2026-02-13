@@ -46,7 +46,7 @@ const navigate=useNavigate()
                 </Typography>
                 <Typography
                   fontSize={12}
-                  color={item.percentChange.toString().startsWith("-")
+                  color={item.percentChange && item.percentChange.toString().startsWith("-")
                     ? "error"
                     : "success"}
                 >
